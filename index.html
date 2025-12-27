@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Новогодний Steam-квест 🎄</title>
+  <title>Новогодний квест 🎄</title>
   <meta name="description" content="Новогодняя открытка-квест: пройди уровни и забери Steam-ключи." />
   <style>
     :root{
@@ -33,15 +33,11 @@
       overflow-x:hidden;
     }
 
-    /* Snow canvas */
     #snow{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.95;}
 
-    /* Sparkles layer */
     .sparkles{position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.55; overflow:hidden;}
     .sparkles span{
-      position:absolute;
-      width: 2px; height: 2px;
-      border-radius: 999px;
+      position:absolute; width: 2px; height: 2px; border-radius: 999px;
       background: rgba(255,255,255,.9);
       box-shadow: 0 0 10px rgba(255,255,255,.65);
       animation: twinkle 3.6s ease-in-out infinite;
@@ -52,7 +48,6 @@
       50%{transform: scale(1.35); opacity:.95}
     }
 
-    /* Bokeh / glow blobs */
     .bokeh{position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: .70;}
     .blob{
       position:absolute; width: 460px; height: 460px; border-radius: 999px;
@@ -68,14 +63,12 @@
       50%{transform: translateY(-20px) translateX(12px) scale(1.04)}
     }
 
-    /* Soft vignette */
     .vignette{
       position:fixed; inset:-20px;
       background: radial-gradient(circle at 50% 40%, transparent 55%, rgba(0,0,0,.40) 100%);
       z-index:0; pointer-events:none;
     }
 
-    /* Top garland */
     .garland{
       position:fixed; top:0; left:0; right:0;
       height:92px;
@@ -86,13 +79,9 @@
     }
     .garland svg{width:100%; height:100%}
 
-    /* Snow confetti micro particles */
     .conf{position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow:hidden;}
     .conf i{
-      position:absolute;
-      width: 8px; height: 10px;
-      border-radius: 2px;
-      opacity: .9;
+      position:absolute; width: 8px; height: 10px; border-radius: 2px; opacity: .9;
       animation: confFall 900ms ease-out forwards;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
     }
@@ -147,15 +136,9 @@
     h1{margin:0 0 6px; font-size: 26px; letter-spacing:.2px;}
     .sub{margin:0; color:var(--muted); line-height:1.42;}
     .candy{
-      height: 4px;
-      width: 260px;
-      border-radius: 999px;
-      background: repeating-linear-gradient(90deg,
-        rgba(255,255,255,.92) 0 12px,
-        rgba(255,108,139,.92) 12px 24px
-      );
-      margin-top: 10px;
-      opacity:.95;
+      height: 4px; width: 260px; border-radius: 999px;
+      background: repeating-linear-gradient(90deg, rgba(255,255,255,.92) 0 12px, rgba(255,108,139,.92) 12px 24px);
+      margin-top: 10px; opacity:.95;
       animation: candyGlow 2.8s ease-in-out infinite;
     }
     @keyframes candyGlow{
@@ -171,9 +154,7 @@
       border-radius: 999px;
       font-size: 13px;
       color: rgba(234,242,255,.90);
-      display:flex;
-      align-items:center;
-      gap:8px;
+      display:flex; align-items:center; gap:8px;
       user-select:none;
       backdrop-filter: blur(6px);
     }
@@ -212,12 +193,8 @@
       transition: transform .08s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
       user-select:none;
       text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      position:relative;
-      overflow:hidden;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      position:relative; overflow:hidden;
     }
     button:hover,.btn:hover{
       background: rgba(255,255,255,.12);
@@ -231,22 +208,15 @@
     }
     button.primary:before{
       content:"";
-      position:absolute;
-      inset:-2px;
+      position:absolute; inset:-2px;
       background: radial-gradient(220px 70px at 20% 0%, rgba(255,255,255,.22), transparent 60%);
       opacity:.8;
       transform: translateX(-60%);
       transition: transform .35s ease;
     }
     button.primary:hover:before{transform: translateX(0%)}
-    button.danger{
-      background: rgba(255,108,139,.12);
-      border-color: rgba(255,108,139,.25);
-    }
-    button.danger:hover{
-      background: rgba(255,108,139,.18);
-      border-color: rgba(255,108,139,.40);
-    }
+    button.danger{background: rgba(255,108,139,.12); border-color: rgba(255,108,139,.25);}
+    button.danger:hover{background: rgba(255,108,139,.18); border-color: rgba(255,108,139,.40);}
     button:disabled{opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important;}
 
     .grid{margin-top: 16px; display:grid; gap: 12px;}
@@ -283,10 +253,8 @@
     .cardHead{display:flex; gap: 12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom: 10px;}
     .title{display:flex; align-items:center; gap:10px; min-width: 240px;}
     .badge{
-      width:34px; height:34px;
-      border-radius: 12px;
-      display:grid;
-      place-items:center;
+      width:34px; height:34px; border-radius: 12px;
+      display:grid; place-items:center;
       background: rgba(255,255,255,.09);
       border:1px solid var(--line);
       font-weight:900;
@@ -297,9 +265,7 @@
     .meta{display:flex; align-items:center; gap:10px; color: var(--muted); font-size: 13px; flex-wrap:wrap;}
     .progress{height: 10px; width: 170px; background: rgba(255,255,255,.08); border:1px solid var(--line); border-radius: 999px; overflow:hidden;}
     .progress > i{
-      display:block;
-      height:100%;
-      width:0%;
+      display:block; height:100%; width:0%;
       background: linear-gradient(90deg, rgba(108,255,159,.85), rgba(255,211,108,.85));
       border-radius: 999px;
       transition: width .25s ease;
@@ -327,12 +293,8 @@
 
     .status{
       margin-top:10px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      font-size: 13px;
-      color: var(--muted);
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      font-size: 13px; color: var(--muted);
     }
     .pill{
       padding:6px 10px;
@@ -383,10 +345,7 @@
     }
 
     .toast{
-      position:fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
+      position:fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
       background: rgba(0,0,0,.58);
       border: 1px solid rgba(255,255,255,.14);
       color: rgba(255,255,255,.92);
@@ -402,9 +361,6 @@
     .toast.show{display:block; animation: pop .18s ease-out}
     @keyframes pop{from{transform: translateX(-50%) translateY(8px); opacity:.0} to{transform: translateX(-50%) translateY(0); opacity:1}}
 
-    .divider{height:1px; background: rgba(255,255,255,.12); margin: 12px 0;}
-
-    /* Modal */
     .modalBack{
       position: fixed; inset: 0;
       background: rgba(0,0,0,.55);
@@ -430,7 +386,6 @@
       gap:12px; flex-wrap:wrap; margin-bottom: 10px;
     }
 
-    /* About */
     .aboutGrid{margin-top: 12px; display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
     @media (max-width: 860px){ .aboutGrid{grid-template-columns: 1fr;} header{margin-top:62px} .progress{width: 100%}}
     .aboutCard h2{margin:0 0 8px; font-size: 15px; letter-spacing:.2px; color: rgba(234,242,255,.94);}
@@ -466,11 +421,12 @@
   <div class="wrap">
     <header>
       <div class="hero">
-        <h1 id="heroTitle">🎄 Новогодний Steam-квест для Димана</h1>
+        <h1 id="heroTitle">🎄 Новогодний квест для Димана</h1>
         <p class="sub" id="heroSub">
-          Диман, с Новым 2026 годом! Я мог просто кинуть ключи, но решил сделать по-человечески: мини-квест.<br>
-          6 уровней → 6 ответов → 6 ключей. Проходи по порядку и не пытайся «угадать на авось».<br>
+          Диман, с Новым 2026 годом! Я мог просто отправить ключи, но сделал сайт-квест — так веселее и интереснее.<br>
+          6 уровней → 6 ответов → 6 ключей. Проходи по порядку, без угадайки.<br>
           <span style="opacity:.9">Прогресс сохраняется в браузере — можешь закрыть вкладку и вернуться позже.</span>
+          <br><span style="opacity:.85">Для Димы от Саши</span>
         </p>
         <div class="candy"></div>
 
@@ -478,7 +434,7 @@
           <div class="chip">🎁 Ключей: <b id="chipCount">6</b></div>
           <div class="chip">⏱️ Время: <b>3–15 минут</b></div>
           <div class="chip">🧠 Режим: <b>по порядку</b></div>
-          <div class="chip">🎮 Итог: <b>6 игр в Steam</b></div>
+          <div class="chip">🎮 Итог: <b>6 случайных игр в Steam</b></div>
         </div>
 
         <div class="btnrow" style="margin-top:12px;">
@@ -490,7 +446,7 @@
       <div class="side">
         <div class="panel">
           <h2>🧾 Прогресс</h2>
-          <p id="progressText">Загружаю квест…</p>
+          <p id="progressText">Нажми «Начать» — откроются уровни.</p>
           <div class="status" style="margin-top:10px;">
             <span class="pill" id="dataStatus">data.json: …</span>
             <span class="pill" id="savedStatus">прогресс: …</span>
@@ -511,44 +467,42 @@
       </div>
     </header>
 
-    <!-- About -->
     <div id="about" class="grid">
       <div class="card aboutCard">
         <h2>📜 Что это за сайт</h2>
         <ul>
-          <li><b>Открытка-квест</b>: я мог скинуть ключи текстом, но сделал мини-пытку с подарком.</li>
+          <li><b>Открытка-квест</b>: вместо “держи ключи” — мини-игра.</li>
           <li><b>6 уровней → 6 ключей</b>: один правильный ответ — один ключ.</li>
           <li>Ответы <b>на русском</b>. Регистр/пробелы не важны.</li>
-          <li><b>Прогресс сохраняется</b> в браузере: можно отвлечься и вернуться.</li>
+          <li><b>Прогресс сохраняется</b> в браузере: можно вернуться позже.</li>
         </ul>
-        <div class="mini">Если захочешь читерить — помни: любой читер в душе просто усталый человек. Но всё равно не надо.</div>
+        <div class="mini">Нажми «Начать» справа — и поехали.</div>
       </div>
 
       <div class="card aboutCard">
         <h2>✅ Как пройти и что делать с ключом</h2>
         <ul>
-          <li>Нажми <b>«Начать»</b> (или листай вниз — уровни уже тут).</li>
+          <li>Нажми <b>«Начать»</b> — появятся уровни.</li>
           <li>Введи ответ → <b>«Проверить»</b>.</li>
           <li>Появится ключ → <b>«Скопировать ключ»</b>.</li>
           <li>Steam → <b>Игры</b> → <b>Активировать продукт…</b> → вставь ключ.</li>
-          <li>Повтори для уровней 2–6.</li>
         </ul>
-        <div class="mini">Если ключ не вставляется — проверь пробелы. Если всё равно нет — значит тебе срочно нужен чай и перерыв.</div>
+        <div class="mini">Если ключ не вставляется — проверь пробелы и раскладку.</div>
       </div>
     </div>
 
-    <!-- Quest -->
+    <!-- Quest (hidden until Start) -->
     <div id="questWrap" class="grid" style="display:none;"></div>
 
     <footer id="footerText">
-      Диман, с Новым годом. Я мог просто отправить тебе ключи — но сделал квест, потому что так веселее (и потому что ты бы всё равно спросил “а чё так просто?”).
-      Забирай игры, отдыхай, и <b>не тупи блядь</b>. — Саша 🎄
+      Диман, с Новым годом. Я мог просто отправить тебе ключи - но сделал сайт-квест, потому что так веселее и интереснее.
+      Забирай игры, отдыхай - с наилучшими пожеланиями Саша и Лера🎄
+      Как приедем привезем физический подарок ).
     </footer>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- Modal: How to activate -->
   <div id="howBack" class="modalBack" role="dialog" aria-modal="true" aria-labelledby="howTitle">
     <div class="modal">
       <div class="top">
@@ -562,12 +516,11 @@
         <li>Вставь ключ вида <b>XXXXX-XXXXX-XXXXX</b> → <b>Далее</b>.</li>
         <li>Готово: игра появится в библиотеке.</li>
       </ol>
-      <p>Если Steam спросит “почему я так счастлив?” — отвечай: “потому что мне Саша подогнал”.</p>
+      <p>Если Steam спросит “откуда ключ?” — отвечай: “Подарок. Спасибо.” 🙂</p>
     </div>
   </div>
 
 <script>
-  // ===== Helpers =====
   const $ = (s, el=document) => el.querySelector(s);
 
   function toast(msg, ms=2200){
@@ -601,26 +554,22 @@
       .replaceAll("'","&#039;");
   }
 
-  // ===== Sparkles =====
+  // Sparkles
   (function initSparkles(){
     const root = document.getElementById("sparkles");
     const n = 48;
     for(let i=0;i<n;i++){
       const sp = document.createElement("span");
-      const x = Math.random()*100;
-      const y = Math.random()*100;
-      const d = (Math.random()*3.4).toFixed(2);
-      const s = (Math.random()*1.8 + 0.6).toFixed(2);
-      sp.style.left = x + "vw";
-      sp.style.top = y + "vh";
-      sp.style.animationDelay = d + "s";
-      sp.style.transform = `scale(${s})`;
+      sp.style.left = (Math.random()*100) + "vw";
+      sp.style.top = (Math.random()*100) + "vh";
+      sp.style.animationDelay = (Math.random()*3.4).toFixed(2) + "s";
+      sp.style.transform = `scale(${(Math.random()*1.8 + 0.6).toFixed(2)})`;
       sp.style.opacity = (Math.random()*0.55 + 0.25).toFixed(2);
       root.appendChild(sp);
     }
   })();
 
-  // ===== Snow =====
+  // Snow
   (function initSnow(){
     const canvas = document.getElementById("snow");
     const ctx = canvas.getContext("2d");
@@ -663,7 +612,7 @@
     tick();
   })();
 
-  // ===== Garland bulbs =====
+  // Garland bulbs
   (function initBulbs(){
     const g = document.getElementById("bulbs");
     const colors = ["rgba(255,211,108,.98)","rgba(108,255,159,.92)","rgba(120,160,255,.92)","rgba(255,108,139,.90)"];
@@ -689,7 +638,7 @@
     }
   })();
 
-  // ===== Modal =====
+  // Modal
   const howBack = $("#howBack");
   const openHow = () => howBack.classList.add("show");
   const closeHow = () => howBack.classList.remove("show");
@@ -698,7 +647,7 @@
   $("#btnHowClose").addEventListener("click", closeHow);
   howBack.addEventListener("click", (e)=> { if(e.target === howBack) closeHow(); });
 
-  // ===== Confetti micro effect =====
+  // Confetti burst
   function confettiBurst(x, y){
     const root = $("#conf");
     const colors = [
@@ -719,25 +668,18 @@
     }
   }
 
-  // ===== Default data (если data.json нет, всё равно работает) =====
+  // Default data (fallback)
   const DEFAULT_DATA = {
     version: 1,
     giftId: "happy-new-year-diman-2026",
-    to: "Диман",
-    from: "Саша",
-    heroTitle: "🎄 Новогодний Steam-квест для Димана",
-    heroSub:
-`Диман, с Новым 2026 годом! Я мог просто кинуть ключи, но решил сделать мини-квест.
-6 уровней → 6 правильных ответов → 6 Steam-ключей.
-Правила: по порядку, ответы на русском, регистр и пробелы не важны.
-Прогресс сохраняется в браузере — можешь закрыть вкладку и вернуться позже.`,
+    heroTitle: "🎄 Новогодний квест для Димана",
     levels: [
       { title:"Разминка: год на табло", tagline:"вход разрешён", prompt:"Введи год, который сейчас на дворе (цифрами).", hint:"Просто цифры.", answer:"2026", key:"88WPK-H0KZQ-NRY6B" },
-      { title:"Математика без боли", tagline:"разогрев мозга", prompt:"Сколько будет 2+0+2+6? (числом)", hint:"Это не ловушка. Почти.", answer:"10", key:"MIGC6-HN6CA-IRCH9" },
+      { title:"Математика без боли", tagline:"разогрев мозга", prompt:"Сколько будет 2+0+2+6? (числом)", hint:"Это не ловушка.", answer:"10", key:"MIGC6-HN6CA-IRCH9" },
       { title:"Проверка на имя", tagline:"локальный контроль", prompt:"Как тебя зовут по версии Саши? (одно слово)", hint:"Пиши по-русски.", answer:"Диман", key:"NCHCA-KJZ3G-NRJ72" },
-      { title:"Тостовый ритуал", tagline:"традиции сильнее нас", prompt:"Закончить фразу: «С Новым годом и …» (два слова).", hint:"Классика.", answer:"с новым счастьем", key:"VLR66-0CCKH-WQX96" },
-      { title:"Мандариновый пароль", tagline:"финал близко", prompt:"Одно слово: главный символ новогоднего выживания.", hint:"Да, это то самое.", answer:"мандарин", key:"8IKXC-L8DZY-XEP09" },
-      { title:"Бонус: потому что могу", tagline:"+1 к наглости", prompt:"Бонус: напиши слово «бонус».", hint:"Прям так и пиши.", answer:"бонус", key:"EMD7Z-QWAJ7-830TI" }
+      { title:"Тостовый ритуал", tagline:"традиции", prompt:"Закончить фразу: «С Новым годом и …» (два слова).", hint:"Классика.", answer:"с новым счастьем", key:"VLR66-0CCKH-WQX96" },
+      { title:"Мандариновый пароль", tagline:"почти финал", prompt:"Одно слово: главный символ новогоднего выживания.", hint:"Да, это то самое.", answer:"мандарин", key:"8IKXC-L8DZY-XEP09" },
+      { title:"Финальный уровень", tagline:"последний", prompt:"Напиши слово «бонус».", hint:"Прям так и пиши.", answer:"бонус", key:"EMD7Z-QWAJ7-830TI" }
     ]
   };
 
@@ -779,29 +721,13 @@
     return false;
   }
 
-  function setHero(data){
-    $("#heroTitle").textContent = data.heroTitle || "🎄 Новогодний Steam-квест";
-    const sub = $("#heroSub");
-    sub.innerHTML = "";
-    const base = document.createElement("span");
-    base.innerHTML = escapeHtml((data.heroSub || "").toString()).replaceAll("\n","<br>");
-    sub.appendChild(base);
-    sub.appendChild(document.createElement("br"));
-    const small = document.createElement("span");
-    small.style.opacity = "0.85";
-    small.textContent = [data.to ? ("для: " + data.to) : "", data.from ? ("от: " + data.from) : ""].filter(Boolean).join(" • ");
-    sub.appendChild(small);
-    $("#chipCount").textContent = String((data.levels||[]).length || 0);
-  }
-
   function updateSide(data, sourceLabel){
     const pr = loadProgress(data.giftId);
     const solved = new Set(pr.solved || []);
     const total = (data.levels || []).length;
 
-    $("#progressText").textContent = total
-      ? `Пройдено: ${solved.size}/${total}. ${solved.size===total ? "Финал. Всё, красавчик." : "По порядку. Без цирка."}`
-      : "Нет уровней.";
+    $("#progressText").textContent =
+      total ? `Готово: ${solved.size}/${total}. Нажми «Начать» — откроются уровни.` : "Нажми «Начать» — откроются уровни.";
 
     const dataOk = sourceLabel === "json";
     setPill("dataStatus", dataOk ? "data.json: найден ✅" : "data.json: нет — работаю из HTML ✅", dataOk ? "ok" : "lock");
@@ -814,7 +740,6 @@
   function renderQuest(data){
     const wrap = $("#questWrap");
     wrap.innerHTML = "";
-    wrap.style.display = "";
 
     const pr = loadProgress(data.giftId);
     const solved = new Set(pr.solved || []);
@@ -824,9 +749,9 @@
     const funFailLines = [
       "Мимо. Попробуй ещё раз.",
       "Не то. Сконцентрируйся.",
-      "Нет. И это даже не смешно.",
-      "Ошибка. Думай головой.",
-      "Неверно. Давай по новой."
+      "Неверно. Подумай ещё.",
+      "Не тот ответ. Давай по новой.",
+      "Ошибка. Попытайся снова."
     ];
 
     data.levels.forEach((lvl, idx) => {
@@ -848,7 +773,7 @@
         <div>
           <h3>${escapeHtml(lvl.title || ("Уровень " + num))}</h3>
           <div class="meta">
-            <span>🎯 Цель: ключ №${num}</span>
+            <span>🎯 Ключ №${num}</span>
             <span>•</span>
             <span>${escapeHtml(lvl.tagline || (isUnlocked ? "вход разрешён" : "сначала предыдущий"))}</span>
           </div>
@@ -939,7 +864,7 @@
 
       const small = document.createElement("div");
       small.className = "small";
-      small.textContent = "Если Steam спросит «откуда ключ?» — отвечай: «Саша подогнал. Не выёбывайся — активируй.»";
+      small.textContent = "Если Steam спросит «откуда ключ?» — отвечай: «Подарок. Спасибо.»";
       keybox.appendChild(keyline);
       keybox.appendChild(small);
 
@@ -978,7 +903,6 @@
 
           toast(`Уровень ${num} пройден. Забирай ключ №${num}.`);
           renderQuest(data);
-          updateSide(data, (data.__source || "fallback"));
         }else{
           card.classList.add("shake");
           setTimeout(()=>card.classList.remove("shake"), 420);
@@ -986,14 +910,13 @@
           pill.className = "pill bad";
           pill.textContent = "Неверно ❌";
           quip.textContent = funFailLines[Math.floor(Math.random()*funFailLines.length)];
-          toast("Не тот ответ. Думай ещё 😄", 1800);
+          toast("Не тот ответ. Подумай ещё 😄", 1800);
 
           btn.disabled = false;
           btn.textContent = "Проверить";
         }
       });
 
-      // enter key on Enter
       input.addEventListener("keydown", (ev)=>{
         if(ev.key === "Enter" && !btn.disabled) btn.click();
       });
@@ -1012,7 +935,7 @@
     });
   }
 
-  // ===== Init =====
+  // Init
   (function init(){
     $("#btnStart").disabled = true;
     $("#btnReset").disabled = true;
@@ -1021,36 +944,38 @@
     setPill("savedStatus", "прогресс: локально", "");
 
     let data = null;
+    let source = "fallback";
+
+    // IMPORTANT: quest hidden until Start
+    $("#questWrap").style.display = "none";
 
     fetchData().then(d => {
       data = d;
-      data.__source = "json";
-      setHero(data);
+      source = "json";
       updateSide(data, "json");
-      renderQuest(data);
-      toast("Квест загружен (data.json). Поехали 🎁");
+      toast("Квест готов. Нажми «Начать» 🎁");
     }).catch(() => {
       data = DEFAULT_DATA;
-      data.__source = "fallback";
-      setHero(data);
+      source = "fallback";
       updateSide(data, "fallback");
-      renderQuest(data);
-      toast("data.json не найден — работаю из HTML (для теста).");
+      toast("data.json не найден — использую встроенный набор. Нажми «Начать».");
     });
 
     $("#btnStart").addEventListener("click", () => {
       if(!data){ toast("Нет данных квеста."); return; }
       renderQuest(data);
-      updateSide(data, data.__source || "fallback");
-      toast("Начали. По порядку.");
+      $("#questWrap").style.display = "";
+      $("#questWrap").scrollIntoView({behavior:"smooth", block:"start"});
+      updateSide(data, source);
+      toast("Поехали 😄");
     });
 
     $("#btnReset").addEventListener("click", () => {
       if(!data){ toast("Нет данных для сброса."); return; }
       resetProgress(data.giftId);
-      toast("Прогресс сброшен. Можешь проходить заново.");
-      renderQuest(data);
-      updateSide(data, data.__source || "fallback");
+      toast("Прогресс сброшен. Нажми «Начать» заново.");
+      $("#questWrap").style.display = "none";
+      updateSide(data, source);
     });
 
     $("#btnStart").disabled = false;
