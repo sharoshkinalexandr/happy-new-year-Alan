@@ -34,35 +34,65 @@
     }
 
     /* Snow canvas */
-    #snow{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.9;}
+    #snow{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.95;}
+
+    /* Sparkles layer */
+    .sparkles{position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.55; overflow:hidden;}
+    .sparkles span{
+      position:absolute;
+      width: 2px; height: 2px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.9);
+      box-shadow: 0 0 10px rgba(255,255,255,.65);
+      animation: twinkle 3.6s ease-in-out infinite;
+      opacity:.6;
+    }
+    @keyframes twinkle{
+      0%,100%{transform: scale(.7); opacity:.25}
+      50%{transform: scale(1.35); opacity:.95}
+    }
 
     /* Bokeh / glow blobs */
-    .bokeh{position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: .65;}
+    .bokeh{position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: .70;}
     .blob{
-      position:absolute; width: 420px; height: 420px; border-radius: 999px;
+      position:absolute; width: 460px; height: 460px; border-radius: 999px;
       filter: blur(28px); transform: translate3d(0,0,0);
       animation: float 10s ease-in-out infinite; mix-blend-mode: screen;
     }
-    .blob.b1{left:-120px; top:80px; background: radial-gradient(circle at 40% 40%, rgba(255,211,108,.55), transparent 60%); animation-duration: 11s;}
-    .blob.b2{right:-140px; top:140px; background: radial-gradient(circle at 45% 45%, rgba(108,255,159,.40), transparent 62%); animation-duration: 13s;}
-    .blob.b3{left:18%; bottom:-180px; background: radial-gradient(circle at 45% 45%, rgba(120,160,255,.45), transparent 62%); animation-duration: 12.5s;}
-    .blob.b4{right:22%; bottom:-220px; background: radial-gradient(circle at 45% 45%, rgba(255,108,139,.35), transparent 62%); animation-duration: 14s;}
+    .blob.b1{left:-140px; top:70px; background: radial-gradient(circle at 40% 40%, rgba(255,211,108,.60), transparent 60%); animation-duration: 11s;}
+    .blob.b2{right:-160px; top:120px; background: radial-gradient(circle at 45% 45%, rgba(108,255,159,.45), transparent 62%); animation-duration: 13s;}
+    .blob.b3{left:16%; bottom:-210px; background: radial-gradient(circle at 45% 45%, rgba(120,160,255,.52), transparent 62%); animation-duration: 12.5s;}
+    .blob.b4{right:20%; bottom:-240px; background: radial-gradient(circle at 45% 45%, rgba(255,108,139,.38), transparent 62%); animation-duration: 14s;}
     @keyframes float{
       0%,100%{transform: translateY(0) translateX(0) scale(1)}
-      50%{transform: translateY(-18px) translateX(10px) scale(1.03)}
+      50%{transform: translateY(-20px) translateX(12px) scale(1.04)}
     }
 
-    /* Vignette */
-    .vignette{position:fixed; inset:-20px; background: radial-gradient(circle at 50% 40%, transparent 55%, rgba(0,0,0,.35) 100%); z-index:0; pointer-events:none;}
+    /* Soft vignette */
+    .vignette{
+      position:fixed; inset:-20px;
+      background: radial-gradient(circle at 50% 40%, transparent 55%, rgba(0,0,0,.40) 100%);
+      z-index:0; pointer-events:none;
+    }
 
-    /* Garland */
-    .garland{position:fixed; top:0; left:0; right:0; height:86px; z-index:2; pointer-events:none; opacity:.98; filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));}
+    /* Top garland */
+    .garland{
+      position:fixed; top:0; left:0; right:0;
+      height:92px;
+      z-index:2;
+      pointer-events:none;
+      opacity:.98;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
+    }
     .garland svg{width:100%; height:100%}
 
-    /* Confetti */
-    .conf{position: fixed; inset: 0; pointer-events:none; z-index:60; overflow:hidden;}
+    /* Snow confetti micro particles */
+    .conf{position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow:hidden;}
     .conf i{
-      position:absolute; width: 8px; height: 10px; border-radius: 2px; opacity:.9;
+      position:absolute;
+      width: 8px; height: 10px;
+      border-radius: 2px;
+      opacity: .9;
       animation: confFall 900ms ease-out forwards;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
     }
@@ -72,11 +102,11 @@
       100%{transform: translateY(140px) rotate(220deg); opacity: 0}
     }
 
-    .wrap{position:relative; z-index:1; max-width: 980px; margin: 0 auto; padding: 28px 18px 80px;}
-    header{margin-top: 70px; display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;}
+    .wrap{position:relative; z-index:3; max-width: 980px; margin: 0 auto; padding: 28px 18px 80px;}
+    header{margin-top: 74px; display:flex; gap:16px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;}
 
     .hero{
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -84,157 +114,335 @@
       flex: 1 1 620px;
       position:relative;
       overflow:hidden;
+      transform: translateZ(0);
+      animation: heroIn .55s ease-out both;
+    }
+    @keyframes heroIn{
+      from{opacity:0; transform: translateY(10px)}
+      to{opacity:1; transform: translateY(0)}
     }
     .hero:before{
-      content:""; position:absolute; inset:-2px;
+      content:"";
+      position:absolute;
+      inset:-2px;
       background:
-        radial-gradient(900px 300px at 10% 10%, rgba(255,211,108,.18), transparent 60%),
-        radial-gradient(900px 300px at 90% 20%, rgba(108,255,159,.12), transparent 60%);
+        radial-gradient(900px 300px at 10% 10%, rgba(255,211,108,.22), transparent 60%),
+        radial-gradient(900px 300px at 90% 20%, rgba(108,255,159,.16), transparent 60%),
+        radial-gradient(700px 240px at 35% 100%, rgba(120,160,255,.12), transparent 60%);
       z-index:0;
     }
+    .hero:after{
+      content:"❄️";
+      position:absolute;
+      right: 14px;
+      top: 10px;
+      font-size: 18px;
+      opacity:.7;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,.35));
+      animation: spinSnow 6.5s linear infinite;
+    }
+    @keyframes spinSnow{from{transform: rotate(0deg)} to{transform: rotate(360deg)}}
     .hero > *{position:relative; z-index:1}
 
     h1{margin:0 0 6px; font-size: 26px; letter-spacing:.2px;}
     .sub{margin:0; color:var(--muted); line-height:1.42;}
     .candy{
-      height: 4px; width: 240px; border-radius: 999px;
-      background: repeating-linear-gradient(90deg, rgba(255,255,255,.9) 0 12px, rgba(255,108,139,.9) 12px 24px);
-      margin-top: 10px; opacity:.9;
+      height: 4px;
+      width: 260px;
+      border-radius: 999px;
+      background: repeating-linear-gradient(90deg,
+        rgba(255,255,255,.92) 0 12px,
+        rgba(255,108,139,.92) 12px 24px
+      );
+      margin-top: 10px;
+      opacity:.95;
+      animation: candyGlow 2.8s ease-in-out infinite;
     }
+    @keyframes candyGlow{
+      0%,100%{filter: drop-shadow(0 0 0 rgba(255,211,108,0))}
+      50%{filter: drop-shadow(0 0 18px rgba(255,211,108,.35))}
+    }
+
     .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
     .chip{
-      border:1px solid var(--line); background: rgba(255,255,255,.05);
-      padding:8px 10px; border-radius: 999px; font-size: 13px;
-      color: rgba(234,242,255,.88); display:flex; align-items:center; gap:8px; user-select:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      padding:8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: rgba(234,242,255,.90);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      backdrop-filter: blur(6px);
     }
     .chip b{color:var(--gold)}
 
     .side{flex: 0 0 300px; width: min(360px, 100%); display:grid; gap:12px;}
-    .panel{background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px;}
+    .panel{
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      backdrop-filter: blur(8px);
+      animation: panelIn .6s ease-out both;
+    }
+    .panel:nth-child(1){animation-delay: .05s}
+    .panel:nth-child(2){animation-delay: .10s}
+    @keyframes panelIn{
+      from{opacity:0; transform: translateY(10px)}
+      to{opacity:1; transform: translateY(0)}
+    }
     .panel h2{margin:0 0 6px; font-size: 14px; letter-spacing:.2px; color: rgba(234,242,255,.92);}
     .panel p{margin:0; font-size: 13px; color: var(--muted); line-height:1.35;}
     .btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
 
     button,.btn{
-      appearance:none; border: 1px solid var(--line); background: rgba(255,255,255,.08);
-      color: var(--text); padding: 10px 12px; border-radius: 12px; cursor:pointer;
-      font-weight:600; letter-spacing:.2px; transition: transform .08s ease, background .15s ease, border-color .15s ease;
-      user-select:none; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      appearance:none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight:700;
+      letter-spacing:.2px;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+      user-select:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      position:relative;
+      overflow:hidden;
     }
-    button:hover,.btn:hover{background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.26);}
+    button:hover,.btn:hover{
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.26);
+      box-shadow: 0 12px 28px rgba(0,0,0,.28);
+    }
     button:active,.btn:active{transform: translateY(1px)}
-    button.primary{background: linear-gradient(180deg, rgba(255,211,108,.30), rgba(255,211,108,.12)); border-color: rgba(255,211,108,.35);}
-    button.primary:hover{background: linear-gradient(180deg, rgba(255,211,108,.40), rgba(255,211,108,.16)); border-color: rgba(255,211,108,.55);}
-    button.danger{background: rgba(255,108,139,.12); border-color: rgba(255,108,139,.25);}
-    button.danger:hover{background: rgba(255,108,139,.18); border-color: rgba(255,108,139,.40);}
-    button:disabled{opacity:.55; cursor:not-allowed; transform:none !important;}
+    button.primary{
+      background: linear-gradient(180deg, rgba(255,211,108,.34), rgba(255,211,108,.14));
+      border-color: rgba(255,211,108,.40);
+    }
+    button.primary:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(220px 70px at 20% 0%, rgba(255,255,255,.22), transparent 60%);
+      opacity:.8;
+      transform: translateX(-60%);
+      transition: transform .35s ease;
+    }
+    button.primary:hover:before{transform: translateX(0%)}
+    button.danger{
+      background: rgba(255,108,139,.12);
+      border-color: rgba(255,108,139,.25);
+    }
+    button.danger:hover{
+      background: rgba(255,108,139,.18);
+      border-color: rgba(255,108,139,.40);
+    }
+    button:disabled{opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important;}
 
     .grid{margin-top: 16px; display:grid; gap: 12px;}
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 14px;
       overflow:hidden;
+      backdrop-filter: blur(10px);
+      transform: translateZ(0);
+      animation: cardIn .42s ease-out both;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 22px 70px rgba(0,0,0,.40);
+    }
+    @keyframes cardIn{
+      from{opacity:0; transform: translateY(12px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+    .card.shake{animation: shake .38s ease both;}
+    @keyframes shake{
+      0%,100%{transform: translateX(0)}
+      20%{transform: translateX(-7px)}
+      40%{transform: translateX(7px)}
+      60%{transform: translateX(-5px)}
+      80%{transform: translateX(5px)}
+    }
+
     .cardHead{display:flex; gap: 12px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; margin-bottom: 10px;}
     .title{display:flex; align-items:center; gap:10px; min-width: 240px;}
     .badge{
-      width:34px; height:34px; border-radius: 12px; display:grid; place-items:center;
-      background: rgba(255,255,255,.08); border:1px solid var(--line);
-      font-weight:800; color: rgba(234,242,255,.95);
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+      width:34px; height:34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,.09);
+      border:1px solid var(--line);
+      font-weight:900;
+      color: rgba(234,242,255,.97);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.10);
     }
     .card h3{margin:0; font-size: 16px; letter-spacing:.2px;}
     .meta{display:flex; align-items:center; gap:10px; color: var(--muted); font-size: 13px; flex-wrap:wrap;}
-    .progress{height: 10px; width: 160px; background: rgba(255,255,255,.08); border:1px solid var(--line); border-radius: 999px; overflow:hidden;}
+    .progress{height: 10px; width: 170px; background: rgba(255,255,255,.08); border:1px solid var(--line); border-radius: 999px; overflow:hidden;}
     .progress > i{
-      display:block; height:100%; width:0%;
-      background: linear-gradient(90deg, rgba(108,255,159,.8), rgba(255,211,108,.8));
-      border-radius: 999px; transition: width .25s ease;
+      display:block;
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(108,255,159,.85), rgba(255,211,108,.85));
+      border-radius: 999px;
+      transition: width .25s ease;
     }
 
     .prompt{margin:0 0 8px; color: rgba(234,242,255,.92); line-height:1.45;}
-    .hint{margin:0 0 10px; color: rgba(234,242,255,.68); font-size: 13px; line-height:1.45;}
+    .hint{margin:0 0 10px; color: rgba(234,242,255,.70); font-size: 13px; line-height:1.45;}
     .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-    input[type="text"], textarea{
-      width:min(540px,100%); padding: 10px 12px; border-radius: 12px;
-      border: 1px solid var(--line); background: rgba(0,0,0,.16); color: var(--text);
-      outline:none; font-size: 14px;
+    input[type="text"]{
+      width:min(560px,100%);
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      color: var(--text);
+      outline:none;
+      font-size: 14px;
+      transition: border-color .15s ease, box-shadow .15s ease;
     }
-    textarea{min-height: 82px; resize: vertical}
-    input[type="text"]::placeholder, textarea::placeholder{color: rgba(234,242,255,.45)}
-    .status{margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-size: 13px; color: var(--muted);}
-    .pill{padding:6px 10px; border-radius: 999px; border:1px solid var(--line); background: rgba(255,255,255,.06);}
+    input[type="text"]:focus{
+      border-color: rgba(255,211,108,.45);
+      box-shadow: 0 0 0 4px rgba(255,211,108,.10);
+    }
+    input[type="text"]::placeholder{color: rgba(234,242,255,.45)}
+
+    .status{
+      margin-top:10px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .pill{
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+    }
     .pill.ok{border-color: rgba(108,255,159,.35); background: rgba(108,255,159,.10); color: rgba(108,255,159,.95);}
     .pill.bad{border-color: rgba(255,108,139,.35); background: rgba(255,108,139,.10); color: rgba(255,108,139,.95);}
     .pill.lock{border-color: rgba(255,255,255,.20); background: rgba(255,255,255,.05); color: rgba(234,242,255,.80);}
 
     .keybox{
-      margin-top: 10px; padding: 12px; border-radius: 14px;
-      border: 1px dashed rgba(255,211,108,.55); background: rgba(255,211,108,.08);
-      display:none; position:relative; overflow:hidden;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,211,108,.62);
+      background: rgba(255,211,108,.08);
+      display:none;
+      position:relative;
+      overflow:hidden;
     }
     .keybox:before{
-      content:""; position:absolute; inset:-2px;
-      background: radial-gradient(500px 150px at 20% 0%, rgba(255,211,108,.22), transparent 60%),
-                  radial-gradient(500px 150px at 80% 0%, rgba(108,255,159,.14), transparent 60%);
-      opacity:.7; pointer-events:none;
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 170px at 20% 0%, rgba(255,211,108,.24), transparent 60%),
+        radial-gradient(520px 170px at 80% 0%, rgba(108,255,159,.16), transparent 60%);
+      opacity:.75;
+      pointer-events:none;
     }
     .keybox > *{position:relative; z-index:1}
-    .keybox.show{display:block}
+    .keybox.show{display:block; animation: keyReveal .35s ease-out both;}
+    @keyframes keyReveal{
+      from{opacity:0; transform: translateY(10px)}
+      to{opacity:1; transform: translateY(0)}
+    }
     .keyline{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:space-between;}
     .key{font-family: var(--mono); font-size: 16px; letter-spacing: 1px; user-select: all; word-break: break-word;}
-    .small{font-size: 12px; color: rgba(234,242,255,.75); margin-top:6px; line-height:1.35;}
+    .small{font-size: 12px; color: rgba(234,242,255,.80); margin-top:6px; line-height:1.35;}
 
-    footer{margin-top: 18px; color: rgba(234,242,255,.65); font-size: 12px; line-height:1.45; text-align:center;}
+    footer{
+      margin-top: 18px;
+      color: rgba(234,242,255,.72);
+      font-size: 12px;
+      line-height:1.55;
+      text-align:center;
+      opacity:.95;
+    }
 
     .toast{
-      position:fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
-      background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.14);
-      color: rgba(255,255,255,.92); padding: 10px 12px; border-radius: 999px;
-      z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      display:none; max-width: min(820px, 92vw); text-align:center;
+      position:fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.58);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+      padding: 10px 12px;
+      border-radius: 999px;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      display:none;
+      max-width: min(860px, 92vw);
+      text-align:center;
+      backdrop-filter: blur(10px);
     }
     .toast.show{display:block; animation: pop .18s ease-out}
     @keyframes pop{from{transform: translateX(-50%) translateY(8px); opacity:.0} to{transform: translateX(-50%) translateY(0); opacity:1}}
 
     .divider{height:1px; background: rgba(255,255,255,.12); margin: 12px 0;}
 
-    /* ADMIN (IMPORTANT: must be overrideable by JS) */
-    .adminWrap{display:none; margin-top: 16px;}
-    .adminGrid{display:grid; gap:12px;}
-    .adminCard{background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 14px;}
-    .adminCard h2{margin:0 0 8px; font-size: 16px;}
-    .help{color: var(--muted); font-size: 13px; line-height: 1.45; margin: 0 0 10px;}
-    .two{display:grid; gap:10px; grid-template-columns: 1fr 1fr;}
-    @media (max-width: 860px){ header{margin-top: 62px} .two{grid-template-columns: 1fr} .progress{width: 100%} }
-
     /* Modal */
-    .modalBack{position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 40; display:none; padding: 18px;}
+    .modalBack{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 40;
+      display:none;
+      padding: 18px;
+    }
     .modalBack.show{display:grid; place-items:center;}
     .modal{
-      width: min(860px, 100%); background: rgba(10, 16, 26, .92);
-      border: 1px solid rgba(255,255,255,.14); border-radius: 18px;
-      box-shadow: 0 20px 70px rgba(0,0,0,.5); padding: 16px;
+      width: min(860px, 100%);
+      background: rgba(10, 16, 26, .92);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 18px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.5);
+      padding: 16px;
+      backdrop-filter: blur(12px);
     }
     .modal h2{margin: 0 0 8px; font-size: 18px;}
     .modal p, .modal li{color: rgba(234,242,255,.82); line-height:1.45;}
     .modal ol{margin: 8px 0 0 18px;}
-    .modal .top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom: 10px;}
+    .modal .top{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px; flex-wrap:wrap; margin-bottom: 10px;
+    }
 
     /* About */
     .aboutGrid{margin-top: 12px; display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
-    @media (max-width: 860px){ .aboutGrid{grid-template-columns: 1fr;} }
+    @media (max-width: 860px){ .aboutGrid{grid-template-columns: 1fr;} header{margin-top:62px} .progress{width: 100%}}
     .aboutCard h2{margin:0 0 8px; font-size: 15px; letter-spacing:.2px; color: rgba(234,242,255,.94);}
     .aboutCard ul{margin:0; padding-left: 18px; color: rgba(234,242,255,.82); line-height:1.45; font-size: 13px;}
     .aboutCard li{margin: 6px 0;}
-    .mini{font-size: 12px; color: rgba(234,242,255,.70); line-height:1.45; margin-top: 8px;}
+    .mini{font-size: 12px; color: rgba(234,242,255,.72); line-height:1.45; margin-top: 8px;}
   </style>
 </head>
 <body>
   <canvas id="snow"></canvas>
+
+  <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
   <div class="bokeh" aria-hidden="true">
     <div class="blob b1"></div>
@@ -260,11 +468,12 @@
       <div class="hero">
         <h1 id="heroTitle">🎄 Новогодний Steam-квест для Димана</h1>
         <p class="sub" id="heroSub">
-          Диман, с Новым 2026 годом! Это не «держи ключи и отстань», а интерактивная открытка-квест от Саши.<br>
-          Внутри — 6 мини-испытаний: отвечаешь → получаешь ключ → активируешь игру в Steam.<br>
-          <span style="opacity:.9">Правила: по порядку, без спойлеров самому себе. Прогресс сохраняется в браузере.</span>
+          Диман, с Новым 2026 годом! Я мог просто кинуть ключи, но решил сделать по-человечески: мини-квест.<br>
+          6 уровней → 6 ответов → 6 ключей. Проходи по порядку и не пытайся «угадать на авось».<br>
+          <span style="opacity:.9">Прогресс сохраняется в браузере — можешь закрыть вкладку и вернуться позже.</span>
         </p>
         <div class="candy"></div>
+
         <div class="chips">
           <div class="chip">🎁 Ключей: <b id="chipCount">6</b></div>
           <div class="chip">⏱️ Время: <b>3–15 минут</b></div>
@@ -299,14 +508,6 @@
             <button id="btnHow" class="primary">Открыть инструкцию</button>
           </div>
         </div>
-
-        <div class="panel">
-          <h2>🛠️ Админка (для Саши)</h2>
-          <p>Если нужен файл <b>data.json</b> — открой админку, сгенерируй и залей в репозиторий.</p>
-          <div class="btnrow">
-            <a class="btn" href="?admin=1">Открыть админку</a>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -315,75 +516,33 @@
       <div class="card aboutCard">
         <h2>📜 Что это за сайт</h2>
         <ul>
-          <li><b>Открытка-квест</b>: вместо того чтобы слать ключи текстом — получаешь их красиво, по-игровому.</li>
+          <li><b>Открытка-квест</b>: я мог скинуть ключи текстом, но сделал мини-пытку с подарком.</li>
           <li><b>6 уровней → 6 ключей</b>: один правильный ответ — один ключ.</li>
-          <li>Ответы <b>на русском</b>, регистр/пробелы не важны.</li>
-          <li><b>Прогресс сохраняется</b> в браузере, можно закрыть вкладку и вернуться.</li>
+          <li>Ответы <b>на русском</b>. Регистр/пробелы не важны.</li>
+          <li><b>Прогресс сохраняется</b> в браузере: можно отвлечься и вернуться.</li>
         </ul>
-        <div class="mini">Если читеришь — снеговик всё видел. Если не читеришь — тоже видел, но уважает.</div>
+        <div class="mini">Если захочешь читерить — помни: любой читер в душе просто усталый человек. Но всё равно не надо.</div>
       </div>
 
       <div class="card aboutCard">
         <h2>✅ Как пройти и что делать с ключом</h2>
         <ul>
-          <li>Нажми <b>«Начать»</b> (или просто листай вниз — уровни появятся).</li>
-          <li>На уровне введи ответ → <b>«Проверить»</b>.</li>
+          <li>Нажми <b>«Начать»</b> (или листай вниз — уровни уже тут).</li>
+          <li>Введи ответ → <b>«Проверить»</b>.</li>
           <li>Появится ключ → <b>«Скопировать ключ»</b>.</li>
           <li>Steam → <b>Игры</b> → <b>Активировать продукт…</b> → вставь ключ.</li>
-          <li>Повтори для остальных уровней.</li>
+          <li>Повтори для уровней 2–6.</li>
         </ul>
-        <div class="mini">Если ключ не вставляется — проверь пробелы. Если всё равно нет — значит Вселенная решила добавить сюжет.</div>
+        <div class="mini">Если ключ не вставляется — проверь пробелы. Если всё равно нет — значит тебе срочно нужен чай и перерыв.</div>
       </div>
     </div>
 
     <!-- Quest -->
     <div id="questWrap" class="grid" style="display:none;"></div>
 
-    <!-- Admin -->
-    <div id="adminWrap" class="adminWrap">
-      <div class="adminCard">
-        <h2>🎛️ Генератор data.json (админка)</h2>
-        <p class="help">
-          Заполни 6 уровней → «Сгенерировать data.json» → «Скачать data.json» → загрузи файл в корень репозитория рядом с index.html.
-          <br>Ответы сохраняются прямо в JSON (можно потом править вручную без генераторов).
-        </p>
-
-        <div class="divider"></div>
-
-        <div class="two">
-          <div>
-            <label class="help" for="giftTo"><b>Кому</b></label>
-            <input id="giftTo" type="text" value="Диман">
-          </div>
-          <div>
-            <label class="help" for="giftFrom"><b>От кого</b></label>
-            <input id="giftFrom" type="text" value="Саша">
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="btnrow">
-          <button id="btnFillSample">Заполнить пример</button>
-          <button id="btnGenerate" class="primary">Сгенерировать data.json</button>
-        </div>
-
-        <div class="divider"></div>
-
-        <label class="help" for="outJson"><b>Содержимое data.json</b></label>
-        <textarea id="outJson" readonly placeholder="Нажми «Сгенерировать data.json» — тут появится JSON."></textarea>
-
-        <div class="btnrow">
-          <button id="btnDownload" class="primary">Скачать data.json</button>
-          <button id="btnCopyJson">Скопировать JSON</button>
-        </div>
-      </div>
-
-      <div id="adminLevels" class="adminGrid"></div>
-    </div>
-
-    <footer>
-      🎆 Документ №2026: «Диман получает ключи, но через квест». Ответы не зависят от регистра и пробелов.
+    <footer id="footerText">
+      Диман, с Новым годом. Я мог просто отправить тебе ключи — но сделал квест, потому что так веселее (и потому что ты бы всё равно спросил “а чё так просто?”).
+      Забирай игры, отдыхай, и <b>не тупи блядь</b>. — Саша 🎄
     </footer>
   </div>
 
@@ -403,14 +562,13 @@
         <li>Вставь ключ вида <b>XXXXX-XXXXX-XXXXX</b> → <b>Далее</b>.</li>
         <li>Готово: игра появится в библиотеке.</li>
       </ol>
-      <p>Если Steam спросит “почему так хорошо?” — отвечай: “потому что Саша”.</p>
+      <p>Если Steam спросит “почему я так счастлив?” — отвечай: “потому что мне Саша подогнал”.</p>
     </div>
   </div>
 
 <script>
   // ===== Helpers =====
   const $ = (s, el=document) => el.querySelector(s);
-  const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
 
   function toast(msg, ms=2200){
     const t = $("#toast");
@@ -443,17 +601,24 @@
       .replaceAll("'","&#039;");
   }
 
-  function downloadFile(filename, text){
-    const blob = new Blob([text], {type:"application/json;charset=utf-8"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  }
+  // ===== Sparkles =====
+  (function initSparkles(){
+    const root = document.getElementById("sparkles");
+    const n = 48;
+    for(let i=0;i<n;i++){
+      const sp = document.createElement("span");
+      const x = Math.random()*100;
+      const y = Math.random()*100;
+      const d = (Math.random()*3.4).toFixed(2);
+      const s = (Math.random()*1.8 + 0.6).toFixed(2);
+      sp.style.left = x + "vw";
+      sp.style.top = y + "vh";
+      sp.style.animationDelay = d + "s";
+      sp.style.transform = `scale(${s})`;
+      sp.style.opacity = (Math.random()*0.55 + 0.25).toFixed(2);
+      root.appendChild(sp);
+    }
+  })();
 
   // ===== Snow =====
   (function initSnow(){
@@ -469,19 +634,19 @@
     window.addEventListener("resize", resize);
     resize();
 
-    const count = 150;
+    const count = 190;
     flakes = Array.from({length:count}, ()=>({
       x: Math.random()*w, y: Math.random()*h,
-      r: (Math.random()*2.2 + 0.8) * devicePixelRatio,
-      v: (Math.random()*0.8 + 0.4) * devicePixelRatio,
+      r: (Math.random()*2.4 + 0.7) * devicePixelRatio,
+      v: (Math.random()*0.95 + 0.35) * devicePixelRatio,
       d: Math.random()*Math.PI*2,
-      sway: (Math.random()*0.8 + 0.2) * devicePixelRatio
+      sway: (Math.random()*0.9 + 0.2) * devicePixelRatio
     }));
 
     function tick(){
       ctx.clearRect(0,0,w,h);
-      ctx.globalAlpha = 0.85;
-      ctx.fillStyle = "rgba(255,255,255,.9)";
+      ctx.globalAlpha = 0.88;
+      ctx.fillStyle = "rgba(255,255,255,.92)";
       for(const f of flakes){
         f.y += f.v;
         f.d += 0.01;
@@ -502,20 +667,20 @@
   (function initBulbs(){
     const g = document.getElementById("bulbs");
     const colors = ["rgba(255,211,108,.98)","rgba(108,255,159,.92)","rgba(120,160,255,.92)","rgba(255,108,139,.90)"];
-    const n = 26;
+    const n = 28;
     for(let i=0;i<n;i++){
       const x = 18 + i*(1200/(n-1));
       const y = 40 + Math.sin(i*0.7)*10 + (i%2?8:0);
       const c = colors[i%colors.length];
       const r = 8 + (i%3);
-      const glow = 22 + (i%4)*4;
+      const glow = 24 + (i%4)*4;
       const bulb = document.createElementNS("http://www.w3.org/2000/svg","circle");
       bulb.setAttribute("cx", x);
       bulb.setAttribute("cy", y);
       bulb.setAttribute("r", r);
       bulb.setAttribute("fill", c);
       bulb.style.filter = `drop-shadow(0 0 ${glow}px ${c})`;
-      bulb.style.opacity = 0.8;
+      bulb.style.opacity = 0.85;
       bulb.style.animation = `tw${i} ${2.2 + (i%5)*0.35}s ease-in-out infinite`;
       const style = document.createElementNS("http://www.w3.org/2000/svg","style");
       style.textContent += `@keyframes tw${i}{0%,100%{opacity:.55}50%{opacity:1}}`;
@@ -533,7 +698,7 @@
   $("#btnHowClose").addEventListener("click", closeHow);
   howBack.addEventListener("click", (e)=> { if(e.target === howBack) closeHow(); });
 
-  // ===== Confetti =====
+  // ===== Confetti micro effect =====
   function confettiBurst(x, y){
     const root = $("#conf");
     const colors = [
@@ -543,18 +708,18 @@
       "rgba(255,108,139,.88)",
       "rgba(255,255,255,.90)"
     ];
-    for(let i=0;i<18;i++){
+    for(let i=0;i<22;i++){
       const p = document.createElement("i");
       p.style.background = colors[i % colors.length];
-      p.style.left = (x + (Math.random()*16-8)) + "px";
-      p.style.top = (y + (Math.random()*10-5)) + "px";
-      p.style.animationDuration = (700 + Math.random()*450) + "ms";
+      p.style.left = (x + (Math.random()*18-9)) + "px";
+      p.style.top = (y + (Math.random()*12-6)) + "px";
+      p.style.animationDuration = (700 + Math.random()*520) + "ms";
       root.appendChild(p);
-      setTimeout(()=>p.remove(), 1200);
+      setTimeout(()=>p.remove(), 1300);
     }
   }
 
-  // ===== Default built-in data (for immediate test even without data.json) =====
+  // ===== Default data (если data.json нет, всё равно работает) =====
   const DEFAULT_DATA = {
     version: 1,
     giftId: "happy-new-year-diman-2026",
@@ -562,22 +727,19 @@
     from: "Саша",
     heroTitle: "🎄 Новогодний Steam-квест для Димана",
     heroSub:
-`Диман, с Новым 2026 годом! Это интерактивная открытка-квест от Саши.
+`Диман, с Новым 2026 годом! Я мог просто кинуть ключи, но решил сделать мини-квест.
 6 уровней → 6 правильных ответов → 6 Steam-ключей.
 Правила: по порядку, ответы на русском, регистр и пробелы не важны.
 Прогресс сохраняется в браузере — можешь закрыть вкладку и вернуться позже.`,
     levels: [
       { title:"Разминка: год на табло", tagline:"вход разрешён", prompt:"Введи год, который сейчас на дворе (цифрами).", hint:"Просто цифры.", answer:"2026", key:"88WPK-H0KZQ-NRY6B" },
-      { title:"Математика без боли", tagline:"тепло пошло", prompt:"Сколько будет 2+0+2+6? (числом)", hint:"Это не ловушка.", answer:"10", key:"MIGC6-HN6CA-IRCH9" },
+      { title:"Математика без боли", tagline:"разогрев мозга", prompt:"Сколько будет 2+0+2+6? (числом)", hint:"Это не ловушка. Почти.", answer:"10", key:"MIGC6-HN6CA-IRCH9" },
       { title:"Проверка на имя", tagline:"локальный контроль", prompt:"Как тебя зовут по версии Саши? (одно слово)", hint:"Пиши по-русски.", answer:"Диман", key:"NCHCA-KJZ3G-NRJ72" },
       { title:"Тостовый ритуал", tagline:"традиции сильнее нас", prompt:"Закончить фразу: «С Новым годом и …» (два слова).", hint:"Классика.", answer:"с новым счастьем", key:"VLR66-0CCKH-WQX96" },
       { title:"Мандариновый пароль", tagline:"финал близко", prompt:"Одно слово: главный символ новогоднего выживания.", hint:"Да, это то самое.", answer:"мандарин", key:"8IKXC-L8DZY-XEP09" },
-      { title:"Бонус: жадность — это нормально", tagline:"+1 к удаче", prompt:"Бонус: напиши слово «бонус».", hint:"Прям так и пиши.", answer:"бонус", key:"EMD7Z-QWAJ7-830TI" }
+      { title:"Бонус: потому что могу", tagline:"+1 к наглости", prompt:"Бонус: напиши слово «бонус».", hint:"Прям так и пиши.", answer:"бонус", key:"EMD7Z-QWAJ7-830TI" }
     ]
   };
-
-  // ===== State / progress =====
-  const isAdmin = new URLSearchParams(location.search).get("admin") === "1";
 
   function setPill(id, text, kind){
     const el = document.getElementById(id);
@@ -610,7 +772,6 @@
     return res.json();
   }
 
-  // ===== Verify answer: plain text "answer" supported =====
   async function verifyAnswer(level, input){
     if (typeof level.answer === "string" && level.answer.trim().length){
       return canon(input) === canon(level.answer);
@@ -619,22 +780,18 @@
   }
 
   function setHero(data){
-    document.getElementById("heroTitle").textContent = data.heroTitle || "🎄 Новогодний Steam-квест";
-    const sub = document.getElementById("heroSub");
+    $("#heroTitle").textContent = data.heroTitle || "🎄 Новогодний Steam-квест";
+    const sub = $("#heroSub");
     sub.innerHTML = "";
-
     const base = document.createElement("span");
-    const text = (data.heroSub || "").toString();
-    base.innerHTML = escapeHtml(text).replaceAll("\n","<br>");
+    base.innerHTML = escapeHtml((data.heroSub || "").toString()).replaceAll("\n","<br>");
     sub.appendChild(base);
-
     sub.appendChild(document.createElement("br"));
     const small = document.createElement("span");
     small.style.opacity = "0.85";
     small.textContent = [data.to ? ("для: " + data.to) : "", data.from ? ("от: " + data.from) : ""].filter(Boolean).join(" • ");
     sub.appendChild(small);
-
-    document.getElementById("chipCount").textContent = String((data.levels||[]).length || 0);
+    $("#chipCount").textContent = String((data.levels||[]).length || 0);
   }
 
   function updateSide(data, sourceLabel){
@@ -642,23 +799,20 @@
     const solved = new Set(pr.solved || []);
     const total = (data.levels || []).length;
 
-    const txt = total
-      ? `Пройдено: ${solved.size}/${total}. ${solved.size===total ? "Финал закрыт. Легенда." : "По порядку, без спойлеров."}`
+    $("#progressText").textContent = total
+      ? `Пройдено: ${solved.size}/${total}. ${solved.size===total ? "Финал. Всё, красавчик." : "По порядку. Без цирка."}`
       : "Нет уровней.";
 
-    document.getElementById("progressText").textContent = txt;
-
     const dataOk = sourceLabel === "json";
-    const dataText = dataOk ? "data.json: найден ✅" : "data.json: не найден — использую встроенный набор ✅";
-    setPill("dataStatus", dataText, dataOk ? "ok" : "lock");
+    setPill("dataStatus", dataOk ? "data.json: найден ✅" : "data.json: нет — работаю из HTML ✅", dataOk ? "ok" : "lock");
     setPill("savedStatus", "прогресс: сохраняется ✅", "ok");
 
-    document.getElementById("btnStart").disabled = false;
-    document.getElementById("btnReset").disabled = false;
+    $("#btnStart").disabled = false;
+    $("#btnReset").disabled = false;
   }
 
   function renderQuest(data){
-    const wrap = document.getElementById("questWrap");
+    const wrap = $("#questWrap");
     wrap.innerHTML = "";
     wrap.style.display = "";
 
@@ -667,20 +821,12 @@
     const total = data.levels.length;
     const solvedCount = solved.size;
 
-    const funWinLines = [
-      "Санта одобрил. Психолог — нет.",
-      "Красиво. Прям как твои обещания “ща приду”.",
-      "Есть контакт. Неси ключи в Steam.",
-      "Уровень взят. Мандаринки в студию.",
-      "Ты это сделал. Страшно, но приятно.",
-      "Поздравляю: мозг включился на праздники."
-    ];
     const funFailLines = [
-      "Не-а. Это звучит уверенно, но не как правда.",
-      "Снеговик в шоке. Попробуй ещё раз.",
-      "Где-то рядом, но не здесь.",
-      "Не тот ответ. Второй шанс — бесплатно (пока что).",
-      "Мимо. Но смешно, да."
+      "Мимо. Попробуй ещё раз.",
+      "Не то. Сконцентрируйся.",
+      "Нет. И это даже не смешно.",
+      "Ошибка. Думай головой.",
+      "Неверно. Давай по новой."
     ];
 
     data.levels.forEach((lvl, idx) => {
@@ -690,6 +836,7 @@
 
       const card = document.createElement("div");
       card.className = "card";
+      card.style.animationDelay = (idx * 70) + "ms";
 
       const head = document.createElement("div");
       head.className = "cardHead";
@@ -701,7 +848,7 @@
         <div>
           <h3>${escapeHtml(lvl.title || ("Уровень " + num))}</h3>
           <div class="meta">
-            <span>🎯 Цель: открыть ключ №${num}</span>
+            <span>🎯 Цель: ключ №${num}</span>
             <span>•</span>
             <span>${escapeHtml(lvl.tagline || (isUnlocked ? "вход разрешён" : "сначала предыдущий"))}</span>
           </div>
@@ -748,17 +895,20 @@
         btn.disabled = true;
       }else{
         btn.textContent = "Проверить";
+        btn.classList.add("primary");
       }
 
       const status = document.createElement("div");
       status.className = "status";
+
       const pill = document.createElement("span");
       pill.className = "pill " + (isSolved ? "ok" : (isUnlocked ? "" : "lock"));
       pill.textContent = isSolved ? "Открыто ✅" : (isUnlocked ? "Ждёт ответа" : "Заблокировано");
 
       const quip = document.createElement("span");
       quip.className = "pill";
-      quip.textContent = isSolved ? "Можно хвастаться" : (isUnlocked ? "Не тупи (любя)" : "Сначала предыдущий");
+      quip.textContent = isSolved ? "Можно хвастаться" : (isUnlocked ? "Не тупи блядь!" : "Сначала предыдущий");
+
       status.appendChild(pill);
       status.appendChild(quip);
 
@@ -789,7 +939,7 @@
 
       const small = document.createElement("div");
       small.className = "small";
-      small.textContent = "Если Steam спросит «откуда ключ?» — отвечай: «Саша был хорошим мальчиком».";
+      small.textContent = "Если Steam спросит «откуда ключ?» — отвечай: «Саша подогнал. Не выёбывайся — активируй.»";
       keybox.appendChild(keyline);
       keybox.appendChild(small);
 
@@ -809,7 +959,7 @@
         if(ok){
           const realKey = (lvl.key || "").toUpperCase().trim();
           if(!isSteamKeyLike(realKey)){
-            toast("Ключ в данных выглядит странно. Проверь формат.");
+            toast("Ключ выглядит странно. Проверь формат.");
             btn.disabled = false;
             btn.textContent = "Проверить";
             return;
@@ -826,16 +976,26 @@
           const rect = e.target.getBoundingClientRect();
           confettiBurst(rect.left + rect.width/2, rect.top + rect.height/2);
 
-          toast(`Уровень ${num} пройден! Ключ №${num} открыт.`);
+          toast(`Уровень ${num} пройден. Забирай ключ №${num}.`);
           renderQuest(data);
+          updateSide(data, (data.__source || "fallback"));
         }else{
+          card.classList.add("shake");
+          setTimeout(()=>card.classList.remove("shake"), 420);
+
           pill.className = "pill bad";
           pill.textContent = "Неверно ❌";
           quip.textContent = funFailLines[Math.floor(Math.random()*funFailLines.length)];
-          toast("Не тот ответ. Попробуй ещё раз 😄", 2000);
+          toast("Не тот ответ. Думай ещё 😄", 1800);
+
           btn.disabled = false;
           btn.textContent = "Проверить";
         }
+      });
+
+      // enter key on Enter
+      input.addEventListener("keydown", (ev)=>{
+        if(ev.key === "Enter" && !btn.disabled) btn.click();
       });
 
       row.appendChild(input);
@@ -852,191 +1012,49 @@
     });
   }
 
-  // ===== Admin generator =====
-  const ADMIN_LEVELS = 6;
-
-  function adminLevelCard(i){
-    const num = i+1;
-    const div = document.createElement("div");
-    div.className = "adminCard";
-    div.innerHTML = `
-      <h2>Уровень ${num}</h2>
-      <p class="help">Загадка видна Диману. Ответ — для проверки. Ключ — тот, что откроется.</p>
-
-      <label class="help"><b>Название</b></label>
-      <input type="text" class="aTitle">
-
-      <label class="help"><b>Загадка</b></label>
-      <textarea class="aPrompt"></textarea>
-
-      <label class="help"><b>Подсказка</b></label>
-      <input type="text" class="aHint">
-
-      <div class="two">
-        <div>
-          <label class="help"><b>Ответ</b></label>
-          <input type="text" class="aAnswer">
-        </div>
-        <div>
-          <label class="help"><b>Steam-ключ</b></label>
-          <input type="text" class="aKey">
-        </div>
-      </div>
-
-      <label class="help"><b>Слоган</b> (необязательно)</label>
-      <input type="text" class="aTag">
-    `;
-    return div;
-  }
-
-  function fillSampleAdmin(){
-    const sample = [
-      { title:"Разминка: год на табло", prompt:"Введи год, который сейчас на дворе (цифрами).", hint:"Просто цифры.", answer:"2026", tag:"вход разрешён", key:"88WPK-H0KZQ-NRY6B" },
-      { title:"Математика без боли", prompt:"Сколько будет 2+0+2+6? (числом)", hint:"Это не ловушка.", answer:"10", tag:"тепло пошло", key:"MIGC6-HN6CA-IRCH9" },
-      { title:"Проверка на имя", prompt:"Как тебя зовут по версии Саши? (одно слово)", hint:"Пиши по-русски.", answer:"Диман", tag:"локальный контроль", key:"NCHCA-KJZ3G-NRJ72" },
-      { title:"Тостовый ритуал", prompt:"Закончить фразу: «С Новым годом и …» (два слова).", hint:"Классика.", answer:"с новым счастьем", tag:"традиции", key:"VLR66-0CCKH-WQX96" },
-      { title:"Мандариновый пароль", prompt:"Одно слово: главный символ новогоднего выживания.", hint:"Да, это то самое.", answer:"мандарин", tag:"финал", key:"8IKXC-L8DZY-XEP09" },
-      { title:"Бонус: жадность — это нормально", prompt:"Бонус: напиши слово «бонус».", hint:"Прям так и пиши.", answer:"бонус", tag:"+1 к удаче", key:"EMD7Z-QWAJ7-830TI" }
-    ];
-
-    const cards = $$("#adminLevels .adminCard");
-    cards.forEach((c, i) => {
-      c.querySelector(".aTitle").value = sample[i].title;
-      c.querySelector(".aPrompt").value = sample[i].prompt;
-      c.querySelector(".aHint").value  = sample[i].hint;
-      c.querySelector(".aAnswer").value= sample[i].answer;
-      c.querySelector(".aTag").value   = sample[i].tag;
-      c.querySelector(".aKey").value   = sample[i].key;
-    });
-
-    $("#giftTo").value = "Диман";
-    $("#giftFrom").value = "Саша";
-    toast("Пример уровней заполнен. Можешь менять тексты/ответы и генерировать JSON.");
-  }
-
-  function generateDataJsonFromAdmin(){
-    const to = $("#giftTo").value.trim() || "Диман";
-    const from = $("#giftFrom").value.trim() || "Саша";
-
-    const cards = $$("#adminLevels .adminCard");
-    const levels = [];
-
-    for(let i=0;i<cards.length;i++){
-      const c = cards[i];
-      const title = c.querySelector(".aTitle").value.trim() || ("Уровень " + (i+1));
-      const prompt = c.querySelector(".aPrompt").value.trim();
-      const hint = c.querySelector(".aHint").value.trim();
-      const answer = c.querySelector(".aAnswer").value.trim();
-      const tag = c.querySelector(".aTag").value.trim();
-      const key = c.querySelector(".aKey").value.trim().toUpperCase();
-
-      if(!prompt) { toast(`Уровень ${i+1}: нет текста загадки.`); return null; }
-      if(!answer){ toast(`Уровень ${i+1}: нет ответа.`); return null; }
-      if(!key)   { toast(`Уровень ${i+1}: нет ключа.`); return null; }
-      if(!isSteamKeyLike(key)) { toast(`Уровень ${i+1}: ключ не похож на Steam-ключ.`); return null; }
-
-      levels.push({ title, tagline: tag, prompt, hint, answer, key });
-    }
-
-    return {
-      version: 1,
-      giftId: "happy-new-year-diman-2026",
-      to,
-      from,
-      heroTitle: "🎄 Новогодний Steam-квест для Димана",
-      heroSub:
-`Диман, с Новым 2026 годом! Это интерактивная открытка-квест от Саши.
-${levels.length} уровней → ${levels.length} правильных ответов → ${levels.length} Steam-ключей.
-Правила: по порядку, ответы на русском, регистр и пробелы не важны.
-Прогресс сохраняется в браузере — можешь закрыть вкладку и вернуться позже.`,
-      levels
-    };
-  }
-
   // ===== Init =====
   (function init(){
-    const btnStart = $("#btnStart");
-    const btnReset = $("#btnReset");
-
-    btnStart.disabled = true;
-    btnReset.disabled = true;
+    $("#btnStart").disabled = true;
+    $("#btnReset").disabled = true;
 
     setPill("dataStatus", "data.json: проверяю…", "");
     setPill("savedStatus", "прогресс: локально", "");
 
-    // Admin mode
-    if(isAdmin){
-      $("#adminWrap").style.display = "block";   // IMPORTANT: override CSS display:none
-      $("#questWrap").style.display = "none";
-
-      $("#progressText").textContent = "Админка: заполни уровни и сгенерируй data.json.";
-      setPill("dataStatus", "data.json: не нужен (админка)", "lock");
-      setPill("savedStatus", "прогресс: не используется", "lock");
-
-      const wrap = $("#adminLevels");
-      wrap.innerHTML = "";
-      for(let i=0;i<ADMIN_LEVELS;i++) wrap.appendChild(adminLevelCard(i));
-
-      $("#btnFillSample").addEventListener("click", fillSampleAdmin);
-
-      $("#btnGenerate").addEventListener("click", () => {
-        const data = generateDataJsonFromAdmin();
-        if(!data) return;
-        $("#outJson").value = JSON.stringify(data, null, 2);
-        toast("JSON готов. Можно скачать и залить в репозиторий.");
-      });
-
-      $("#btnDownload").addEventListener("click", () => {
-        const json = $("#outJson").value.trim();
-        if(!json){ toast("Сначала сгенерируй JSON."); return; }
-        downloadFile("data.json", json);
-        toast("Скачано: data.json");
-      });
-
-      $("#btnCopyJson").addEventListener("click", async () => {
-        const json = $("#outJson").value.trim();
-        if(!json){ toast("Сначала сгенерируй JSON."); return; }
-        try{ await navigator.clipboard.writeText(json); toast("JSON скопирован."); }
-        catch{ toast("Не удалось скопировать. Выдели и скопируй вручную."); }
-      });
-
-      return;
-    }
-
-    // Quest mode (try data.json, else fallback to DEFAULT_DATA)
     let data = null;
 
     fetchData().then(d => {
       data = d;
+      data.__source = "json";
       setHero(data);
       updateSide(data, "json");
       renderQuest(data);
       toast("Квест загружен (data.json). Поехали 🎁");
     }).catch(() => {
       data = DEFAULT_DATA;
+      data.__source = "fallback";
       setHero(data);
       updateSide(data, "fallback");
       renderQuest(data);
-      toast("data.json не найден — использую встроенный набор (для теста).");
+      toast("data.json не найден — работаю из HTML (для теста).");
     });
 
-    btnStart.addEventListener("click", () => {
+    $("#btnStart").addEventListener("click", () => {
       if(!data){ toast("Нет данных квеста."); return; }
       renderQuest(data);
-      updateSide(data, "fallback");
-      toast("Начали. По порядку 😄");
+      updateSide(data, data.__source || "fallback");
+      toast("Начали. По порядку.");
     });
 
-    btnReset.addEventListener("click", () => {
+    $("#btnReset").addEventListener("click", () => {
       if(!data){ toast("Нет данных для сброса."); return; }
       resetProgress(data.giftId);
-      toast("Прогресс сброшен. Можно перепройти.");
+      toast("Прогресс сброшен. Можешь проходить заново.");
       renderQuest(data);
-      updateSide(data, "fallback");
+      updateSide(data, data.__source || "fallback");
     });
 
-    btnStart.disabled = false;
-    btnReset.disabled = false;
+    $("#btnStart").disabled = false;
+    $("#btnReset").disabled = false;
   })();
 </script>
 </body>
