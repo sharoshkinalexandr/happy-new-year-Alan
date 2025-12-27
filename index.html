@@ -392,6 +392,27 @@
     .aboutCard ul{margin:0; padding-left: 18px; color: rgba(234,242,255,.82); line-height:1.45; font-size: 13px;}
     .aboutCard li{margin: 6px 0;}
     .mini{font-size: 12px; color: rgba(234,242,255,.72); line-height:1.45; margin-top: 8px;}
+    .finalCard{
+  border-color: rgba(255,211,108,.35);
+  background: linear-gradient(180deg, rgba(255,211,108,.10), rgba(255,255,255,.04));
+  position: relative;
+  overflow: hidden;
+}
+.finalCard:before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(700px 220px at 15% 0%, rgba(255,211,108,.22), transparent 60%),
+    radial-gradient(700px 220px at 85% 0%, rgba(108,255,159,.14), transparent 60%);
+  opacity:.9;
+  pointer-events:none;
+}
+.finalCard > *{ position:relative; z-index:1; }
+.finalCard #finalTitle{
+  font-size: 18px;
+}
+
   </style>
 </head>
 <body>
@@ -493,6 +514,47 @@
 
     <!-- Quest (hidden until Start) -->
     <div id="questWrap" class="grid" style="display:none;"></div>
+    <!-- Final greeting card (hidden until the last level is solved) -->
+<div id="finalCard" class="card finalCard" style="display:none;">
+  <div class="cardHead">
+    <div class="title">
+      <div class="badge">🎁</div>
+      <div>
+        <h3 id="finalTitle">Открытка</h3>
+        <div class="meta">
+          <span>🎆 Финал квеста</span><span>•</span><span>поздравления разблокированы</span>
+        </div>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="progress" title="Ты красавчик">
+        <i style="width:100%"></i>
+      </div>
+    </div>
+  </div>
+
+  <p class="prompt" id="finalBody">
+    Диман, с Новым годом! 🎄
+Тут от Саши и Леры — самые тёплые поздравления и пожелания всего самого лучшего: чтобы здоровье не сдавало, деньги не заканчивались, а настроение было как после нормального отпуска, а не после понедельника.
+
+Пусть в 2026 всё начнёт складываться в твою пользу: рост по службе, новые возможности, уверенные карьерные успехи, чтобы тебя замечали, ценили и продвигали не “когда-нибудь”, а по факту твоих результатов. Больше сильных решений, меньше лишней суеты и людей, которые тормозят.
+
+Отдыхай и кайфуй — и пусть этот год будет реально мощным.
+С наилучшими пожеланиями, Саша и Лера 🎁.
+  </p>
+
+  <div class="divider"></div>
+
+  <div class="btnrow">
+    <button class="primary" id="btnFinalCopy">Скопировать поздравление</button>
+    <button id="btnFinalConfetti">Ещё салют 🎆</button>
+  </div>
+
+  <div class="mini" id="finalMini">
+    P.S. Если ты дочитал до сюда — значит ты реально дошёл до конца. Уважаю.
+  </div>
+</div>
+
 
     <footer id="footerText">
       Диман, с Новым годом. Я мог просто отправить тебе ключи - но сделал сайт-квест, потому что так веселее и интереснее.
@@ -544,6 +606,13 @@
     const t = (s||"").trim().toUpperCase();
     return /^[A-Z0-9]{5}(-[A-Z0-9]{5}){2,4}$/.test(t);
   }
+function showFinalCard(){
+  const card = document.getElementById("finalCard");
+  if(!card) return;
+
+  card.style.display = "";
+  card.scrollIntoView({behavior:"smooth", block:"start"});
+}
 
   function escapeHtml(s){
     return (s ?? "").toString()
@@ -667,6 +736,30 @@
       setTimeout(()=>p.remove(), 1300);
     }
   }
+function bindFinalCardButtons(){
+  const btnCopy = document.getElementById("btnFinalCopy");
+  const btnBoom = document.getElementById("btnFinalConfetti");
+  const body = document.getElementById("finalBody");
+
+  if(btnCopy){
+    btnCopy.addEventListener("click", async () => {
+      const text = body ? body.textContent.trim() : "";
+      try{
+        await navigator.clipboard.writeText(text);
+        toast("Поздравление скопировано ✅");
+      }catch{
+        toast("Не удалось скопировать. Скопируй вручную.");
+      }
+    });
+  }
+
+  if(btnBoom){
+    btnBoom.addEventListener("click", () => {
+      confettiBurst(window.innerWidth/2, 90);
+      toast("Бабах 🎆");
+    });
+  }
+}
 
   // Default data (fallback)
   const DEFAULT_DATA = {
@@ -904,7 +997,13 @@ small.textContent = isLast ? "А что сразу так не ответил? �
           confettiBurst(rect.left + rect.width/2, rect.top + rect.height/2);
 
           toast(`Уровень ${num} пройден. Забирай ключ №${num}.`);
-          renderQuest(data);
+renderQuest(data);
+
+// если это последний уровень — показываем открытку
+if(idx === data.levels.length - 1){
+  showFinalCard();
+}
+
         }else{
           card.classList.add("shake");
           setTimeout(()=>card.classList.remove("shake"), 420);
@@ -955,10 +1054,24 @@ small.textContent = isLast ? "А что сразу так не ответил? �
       data = d;
       source = "json";
       updateSide(data, "json");
+      bindFinalCardButtons();
+
+const pr = loadProgress(data.giftId);
+if(pr && pr.solved && pr.solved.length === data.levels.length){
+  showFinalCard();
+}
+
       toast("Квест готов. Нажми «Начать» 🎁");
     }).catch(() => {
       data = DEFAULT_DATA;
       source = "fallback";
+      bindFinalCardButtons();
+
+const pr = loadProgress(data.giftId);
+if(pr && pr.solved && pr.solved.length === data.levels.length){
+  showFinalCard();
+}
+
       updateSide(data, "fallback");
       toast("data.json не найден — использую встроенный набор. Нажми «Начать».");
     });
