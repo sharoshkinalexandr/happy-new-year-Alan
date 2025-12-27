@@ -864,7 +864,8 @@
 
       const small = document.createElement("div");
       small.className = "small";
-      small.textContent = "Если Steam спросит «откуда ключ?» — отвечай: «Подарок. Спасибо.»";
+     const defaultNote = "Если Steam спросит «откуда ключ?» — отвечай: «Подгон от Сани!»";
+     small.textContent = (lvl.keyNote && String(lvl.keyNote).trim()) ? String(lvl.keyNote) : defaultNote;
       keybox.appendChild(keyline);
       keybox.appendChild(small);
 
